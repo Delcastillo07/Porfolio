@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio </title>
+  <style>
+    body {
+      font-family: "Poppins", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url("https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/deliveries/97778446/original/global-network/create-2d-animated-gif.gif") no-repeat center center fixed;
+      background-size: cover;
+      color: #4a2c4c;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255, 240, 246, 0.88);
+      z-index: -1;
+    }
+    header {
+      background: linear-gradient(to right, #ff9a9e, #fecfef);
+      color: white;
+      text-align: center;
+      padding: 3rem 2rem;
+      border-bottom-left-radius: 40px;
+      border-bottom-right-radius: 40px;
+      box-shadow: 0px 6px 15px rgba(0,0,0,0.15);
+    }
+    header img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 5px solid #fff;
+      object-fit: cover;
+    }
+    header h1 {
+      margin: 10px 0 0;
+      font-size: 2.5rem;
+    }
+    nav {
+      background: #ff99cc;
+      padding: 1rem;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+    nav a:hover { color: #ffe6f2; }
+    section {
+      display: none;
+      padding: 3rem;
+      margin: 2rem;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      animation: fadeIn 0.8s ease-in-out;
+    }
+    section.active { display: block; }
+    h2 {
+      color: #cc0066;
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .gallery-item {
+      position: relative;
+      text-align: center;
+    }
+    .gallery img {
+      width: 220px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 3px solid #ff99cc;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    .delete-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: rgba(255,0,100,0.8);
+      border: none;
+      color: white;
+      border-radius: 50%;
+      cursor: pointer;
+      padding: 5px 9px;
+      font-size: 14px;
+    }
+    input[type="file"], input[type="text"] {
+      display: block;
+      margin: 1rem auto;
+      padding: 0.6rem;
+      border: 2px solid #ff99cc;
+      border-radius: 10px;
+      background: #fff;
+    }
+    footer {
+      text-align: center;
+      background: #ff99cc;
+      color: white;
+      padding: 1.2rem;
+      margin-top: 2rem;
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Lightbox Modal */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+    }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 12px;
+    }
+    .lightbox .close, .lightbox .prev, .lightbox .next {
+      position: absolute;
+      top: 50%;
+      font-size: 2rem;
+      color: white;
+      background: rgba(0,0,0,0.5);
+      padding: 0.5rem 1rem;
+      border-radius: 50%;
+      cursor: pointer;
+      user-select: none;
+      transform: translateY(-50%);
+    }
+    .lightbox .close { top: 5%; right: 5%; transform: none; }
+    .lightbox .prev { left: 5%; }
+    .lightbox .next { right: 5%; }
+    .lightbox .close:hover, .lightbox .prev:hover, .lightbox .next:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    /* Skill Cards */
+    .skill-card {
+      background: #ffe6f2;
+      border: 2px solid #ff99cc;
+      border-radius: 15px;
+      padding: 1.5rem;
+      width: 180px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1rem;
+      color: #cc0066;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .skill-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    /* Education Cards */
+    .edu-card {
+      background: #fff0f6;
+      border: 2px solid #ff99cc;
+      border-radius: 15px;
+      padding: 1.2rem;
+      width: 240px;
+      text-align: center;
+      font-size: 1rem;
+      color: #b30059;
+      font-weight: 600;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .edu-card small {
+      display: block;
+      margin-top: 5px;
+      font-weight: normal;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    .edu-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <header id="home">
+    <img id="profilePic" src="https://via.placeholder.com/150" alt="Profile">
+    <h1 id="profileName">Jocelyn A. Del Castillo</h1>
+    <p>Welcome to my Portfolio </p>
+  </header>
+
+  <nav>
+    <a onclick="showSection('about')">About</a>
+    <a onclick="showSection('skills')">Skills</a>
+    <a onclick="showSection('education')">Education</a>
+    <a onclick="showSection('resume')">Resume</a>
+    <a onclick="showSection('certificates')">Certificates</a>
+    <a onclick="showSection('projects')">Projects</a>
+    <a onclick="showSection('contact')">Contact</a>
+    <a onclick="showSection('settings')">⚙ Settings</a>
+    <a onclick="showSection('home')"> Home</a>
+  </nav>
+
+  <!-- About -->
+  <section id="about">
+  <h2> About Me</h2>
+  <p>
+    Hello, I’m <b>Jocelyn A. Del Castillo</b>. I’m a student who enjoys learning about technology and design.  
+    I like exploring networking, Linux, and creative tools, and I’m always open to learning new things that can help me improve.  
+    I believe that even small steps in learning can lead to meaningful growth.
+  </p>
+</section>
+
+</section>
+
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <h2> Skills</h2>
+    <div class="gallery">
+      <div class="skill-card"> Design<br>Figma, Canva</div>
+      <div class="skill-card"> Tech<br>Networking, Linux</div>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section id="education">
+    <h2> Education</h2>
+    <div class="gallery">
+      <div class="edu-card"> Jomalig Central Elementary School <br><small>(2012–2013)</small></div>
+      <div class="edu-card"> Jomalig National High School <br><small>(2019–2020)</small></div>
+      <div class="edu-card"> Laguna State Polytechnic University Siniloan (Host) Campus <br><small>(2022–Present)</small></div>
+    </div>
+  </section>
+
+  <!-- Resume -->
+  <section id="resume">
+    <h2> Resume</h2>
+    <input type="file" id="resumeUpload" accept="image/*" multiple>
+    <div class="gallery" id="resumeGallery"></div>
+  </section>
+
+  <!-- Certificates -->
+  <section id="certificates">
+    <h2> Certificates</h2>
+    <input type="file" id="certUpload" accept="image/*" multiple>
+    <div class="gallery" id="certGallery"></div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <h2> Projects</h2>
+    <input type="file" id="projUpload" accept="image/*" multiple>
+    <div class="gallery" id="projGallery"></div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2> Contact</h2>
+    <p>Email: <a href="mailto:jocelyndelcastillo99@gamil.com">jocelyndelcastillo99@gamil.com</a></p>
+    <p>Facebook: <a href="https://www.facebook.com/jocelyn.a.delcastillo/" target="_blank"> Visit my Facebook</a></p>
+  </section>
+
+  <!-- Settings -->
+  <section id="settings">
+    <h2>⚙ Settings</h2>
+    <label>Edit Profile Picture:</label>
+    <input type="file" id="profileUpload" accept="image/*">
+    <label>Edit Name:</label>
+    <input type="text" id="nameInput" placeholder="Enter your name">
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <span class="close" onclick="closeLightbox()">&times;</span>
+    <span class="prev" onclick="changeImage(-1)">&#10094;</span>
+    <img id="lightboxImg" src="">
+    <span class="next" onclick="changeImage(1)">&#10095;</span>
+  </div>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
+      document.querySelector("header").style.display = "none";
+      if (id === "home") {
+        document.querySelector("header").style.display = "block";
+      } else {
+        document.getElementById(id).classList.add("active");
+      }
+    }
+
+    let lightboxIndex = 0;
+    let lightboxImages = [];
+    let currentGallery = null;
+
+    function addImageToGallery(src, gallery, storageKey) {
+      const item = document.createElement("div");
+      item.classList.add("gallery-item");
+
+      const img = document.createElement("img");
+      img.src = src;
+      img.addEventListener("click", () => openLightbox(src, gallery));
+
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "✖";
+      delBtn.classList.add("delete-btn");
+      delBtn.onclick = () => {
+        item.remove();
+        let savedImages = JSON.parse(localStorage.getItem(storageKey)) || [];
+        savedImages = savedImages.filter(i => i !== src);
+        localStorage.setItem(storageKey, JSON.stringify(savedImages));
+      };
+
+      item.appendChild(img);
+      item.appendChild(delBtn);
+      gallery.appendChild(item);
+    }
+
+    function openLightbox(src, gallery) {
+      document.getElementById("lightbox").style.display = "flex";
+      document.getElementById("lightboxImg").src = src;
+
+      // Get only images from this gallery
+      lightboxImages = Array.from(gallery.querySelectorAll("img")).map(img => img.src);
+      lightboxIndex = lightboxImages.indexOf(src);
+      currentGallery = gallery;
+    }
+
+    function closeLightbox() {
+      document.getElementById("lightbox").style.display = "none";
+    }
+
+    function changeImage(direction) {
+      if (!currentGallery) return;
+      lightboxIndex += direction;
+      if (lightboxIndex < 0) lightboxIndex = lightboxImages.length - 1;
+      if (lightboxIndex >= lightboxImages.length) lightboxIndex = 0;
+      document.getElementById("lightboxImg").src = lightboxImages[lightboxIndex];
+    }
+
+    function handleImageUpload(inputId, galleryId, storageKey) {
+      const input = document.getElementById(inputId);
+      const gallery = document.getElementById(galleryId);
+      let savedImages = JSON.parse(localStorage.getItem(storageKey)) || [];
+      savedImages.forEach(src => addImageToGallery(src, gallery, storageKey));
+
+      input.addEventListener("change", () => {
+        Array.from(input.files).forEach(file => {
+          const reader = new FileReader();
+          reader.onload = e => {
+            const imgSrc = e.target.result;
+            addImageToGallery(imgSrc, gallery, storageKey);
+            savedImages.push(imgSrc);
+            localStorage.setItem(storageKey, JSON.stringify(savedImages));
+          };
+          reader.readAsDataURL(file);
+        });
+      });
+    }
+
+    handleImageUpload("resumeUpload", "resumeGallery", "resumeImages");
+    handleImageUpload("certUpload", "certGallery", "certImages");
+    handleImageUpload("projUpload", "projGallery", "projImages");
+
+    document.getElementById("profileUpload").addEventListener("change", function() {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          document.getElementById("profilePic").src = e.target.result;
+          localStorage.setItem("profilePic", e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    window.addEventListener("load", function() {
+      const savedPic = localStorage.getItem("profilePic");
+      if (savedPic) document.getElementById("profilePic").src = savedPic;
+      const savedName = localStorage.getItem("profileName");
+      if (savedName) {
+        document.getElementById("profileName").textContent = savedName;
+        document.getElementById("nameInput").value = savedName;
+      }
+    });
+
+    document.getElementById("nameInput").addEventListener("input", function() {
+      const name = this.value || "Jocelyn A. Del Castillo";
+      document.getElementById("profileName").textContent = name;
+      localStorage.setItem("profileName", name);
+    });
+  </script>
+</body>
+</html>
