@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header id="home">
+    <img id="profilePic" src="https://via.placeholder.com/150" alt="Profile" />
+    <h1 id="profileName">Jocelyn A. Del Castillo</h1>
+    <p>Welcome to my Portfolio</p>
+  </header>
+
+  <nav>
+    <a onclick="showSection('about')">About</a>
+    <a onclick="showSection('skills')">Skills</a>
+    <a onclick="showSection('education')">Education</a>
+    <a onclick="showSection('resume')">Resume</a>
+    <a onclick="showSection('certificates')">Certificates</a>
+    <a onclick="showSection('projects')">Projects</a>
+    <a onclick="showSection('contact')">Contact</a>
+    <a onclick="showSection('settings')">⚙ Settings</a>
+    <a onclick="showSection('home')">Home</a>
+  </nav>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <p>
+      Hello, I’m <b>Jocelyn A. Del Castillo</b>. I’m a student who enjoys learning about
+      technology and design. I like exploring networking, Linux, and creative tools.
+    </p>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="gallery">
+      <div class="skill-card">Design<br />Figma, Canva</div>
+      <div class="skill-card">Tech<br />Networking, Linux</div>
+    </div>
+  </section>
+
+  <section id="education">
+    <h2>Education</h2>
+    <div class="gallery">
+      <div class="edu-card">Jomalig Central Elementary School <br /><small>(2012–2013)</small></div>
+      <div class="edu-card">Jomalig National High School <br /><small>(2019–2020)</small></div>
+      <div class="edu-card">
+        Laguna State Polytechnic University<br /><small>(2022–Present)</small>
+      </div>
+    </div>
+  </section>
+
+  <section id="resume">
+    <h2>Resume</h2>
+    <input type="file" id="resumeUpload" accept="image/*" multiple />
+    <div class="gallery" id="resumeGallery"></div>
+  </section>
+
+  <section id="certificates">
+    <h2>Certificates</h2>
+    <input type="file" id="certUpload" accept="image/*" multiple />
+    <div class="gallery" id="certGallery"></div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <input type="file" id="projUpload" accept="image/*" multiple />
+    <div class="gallery" id="projGallery"></div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:jocelyndelcastillo99@gmail.com">jocelyndelcastillo99@gmail.com</a></p>
+    <p>Facebook: <a href="https://www.facebook.com/jocelyn.a.delcastillo/" target="_blank">Visit my Facebook</a></p>
+  </section>
+
+  <section id="settings">
+    <h2>⚙ Settings</h2>
+    <label>Edit Profile Picture:</label>
+    <input type="file" id="profileUpload" accept="image/*" />
+
+    <label>Edit Name:</label>
+    <input type="text" id="nameInput" placeholder="Enter your name" />
+  </section>
+
+  <div class="lightbox" id="lightbox">
+    <span class="close" onclick="closeLightbox()">&times;</span>
+    <span class="prev" onclick="changeImage(-1)">&#10094;</span>
+    <img id="lightboxImg" src="" />
+    <span class="next" onclick="changeImage(1)">&#10095;</span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
